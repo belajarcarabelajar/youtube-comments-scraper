@@ -1,0 +1,11 @@
+# Sentiment Analysis Audit Checklist
+
+| ID | Status | Priority | Affected Files | Problem | Recommended Fix | Validation Method |
+|---|---|---|---|---|---|---|
+| 01 | Pending | Critical | `index.ts` | The current architecture uses a static lexicon (`sentiment` npm), which cannot generate reasoning, spam flags, or context extraction as required by the new prompt. | Introduce heuristic-based flags for Spam/Toxic OR document the requirement to transition to a local LLM (e.g., Ollama/Llama 3) for reasoning capabilities. | Verify output includes new flags (Spam/Toxic) via unit tests. |
+| 02 | Pending | High | `index.ts`, `test.ts` | Preprocessing is naive. URLs, mentions, and severe slang are not stripped/normalized, skewing sentiment scores. | Implement regex pipelines to strip URLs/mentions and a dictionary for Indonesian slang normalization. | Unit tests specifically targeting dirty text to ensure accurate scoring. |
+| 03 | Pending | High | `index.test.ts` | Evaluation benchmark is too small (8 tests). F1 macro > 85% requirement cannot be measured accurately. | Create `benchmark.json` with 100 manually labeled comments. Update tests to calculate F1, Precision, and Recall. | `bun test` outputs F1 > 85%. |
+| 04 | Pending | High | `index.ts` | API lacks retry logic and rate limiting. Vulnerable to sudden network drops or 5xx errors. | Add exponential backoff wrapper around `fetch`. | Mock a 503 error and ensure the script retries 3 times before failing. |
+| 05 | Pending | Medium | `index.ts` | Taxonomy is too simple (POS, NEG, NEU). Doesn't handle "Mixed" or "Unclear". | Add `MIXED` (if abs(pos) and abs(neg) are both high) and `UNCLEAR` (if score is exactly 0 but length is long). Add heuristics for `SPAM`. | Benchmark tests covering Mixed/Spam categories. |
+| 06 | Pending | Medium | `index.ts` | Data schema lacks audit fields (raw text vs normalized, model version, timestamp). | Expand `CommentData` interface to include `raw_text`, `normalized_text`, `processing_timestamp`, `model_version`, and `confidence_score`. | Inspect CSV/JSON/MD exports for new columns. |
+| 07 | Pending | Low | `index.ts` | Markdown report lacks deep insights (recurring themes, spam ratio). | Update markdown generation to include Spam ratio, Toxicity ratio, and distribution charts/summaries. | Visual review of the exported `comments_*.md`. |
