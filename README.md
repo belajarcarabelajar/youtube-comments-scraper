@@ -1,6 +1,7 @@
 # youtube-comments-scraper
 A powerful YouTube comments scraper and hybrid sentiment analyzer specifically tuned for English and Indonesian languages.
 
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![Bun Version](https://img.shields.io/badge/Bun-v1.3.14-black?logo=bun)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -20,7 +21,7 @@ Analyzing YouTube comments manually can be overwhelming, especially for videos w
 ## Tech Stack
 - **Runtime**: [Bun](https://bun.sh) & TypeScript
 - **Machine Learning**: `@xenova/transformers`, `sentiment` (Lexicon), Local Ollama (qwen2.5:1.5b)
-- **Language Detection**: `franc-min`
+- **Language Detection & Preprocessing**: `franc-min`, `emoji-emotion`
 
 ## Prerequisites
 - **Bun**: v1.0 or higher.
@@ -77,6 +78,7 @@ youtube-comments-scraper/
 ├── lexicons.ts            # Indonesian slang, toxic, and positive/negative lexicons
 ├── package.json           # Dependencies and scripts
 ├── tsconfig.json          # TypeScript configuration
+├── bun.lock               # Bun lockfile
 ├── .env                   # Environment variables (API Key)
 └── local_models/          # Cached transformer models
 ```
@@ -86,7 +88,14 @@ Contributions are welcome! Please open an issue or submit a Pull Request if you'
 
 ## API Reference / Internal Methods
 While primarily a CLI tool, the core logic is structured to be modular. Key components inside `index.ts` such as sentiment analysis pipelines and markdown report generators can potentially be exported. 
-*[PERLU KONFIRMASI: Tambahkan detail parameter dan return type dari fungsi utama jika ditujukan sebagai library/module]*
+
+### `preprocess(text: string)`
+Cleans and normalizes the input text by stripping URLs, converting emojis to text labels, and handling repeating characters.
+- **Returns**: `{ normalized: string, urls: string[] }`
+
+### `analyzeComment(text: string)`
+Performs hybrid sentiment analysis (Transformers, Lexicon, and Ollama verification) as well as spam and toxicity checks.
+- **Returns**: `Promise<{ score: number, confidence: number, label: string, isSpam: boolean, isToxic: boolean, reasoning: string }>`
 
 ## Acknowledgements
 - [Bun](https://bun.sh) for the incredibly fast TS runtime.
