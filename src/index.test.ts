@@ -8,26 +8,26 @@ test("Preprocessing strips URLs, mentions, and normalizes slang", () => {
   expect(normalized).toBe("wah ini keren banget");
 });
 
-test("Confidence score boundaries", () => {
-  const { confidence } = analyzeComment("ini komentar biasa saja tanpa kata kunci");
+test("Confidence score boundaries", async () => {
+  const { confidence } = await analyzeComment("ini komentar biasa saja tanpa kata kunci");
   expect(confidence).toBeGreaterThanOrEqual(0);
   expect(confidence).toBeLessThanOrEqual(100);
 });
 
-test("Spam detection", () => {
-  const result = analyzeComment("subs channel aku ya http://spam.com");
+test("Spam detection", async () => {
+  const result = await analyzeComment("subs channel aku ya http://spam.com");
   expect(result.label).toBe("SPAM");
   expect(result.isSpam).toBe(true);
 });
 
-test("Toxic detection", () => {
-  const result = analyzeComment("dasar lu anjing goblok");
+test("Toxic detection", async () => {
+  const result = await analyzeComment("dasar lu anjing goblok");
   expect(result.label).toBe("TOXIC");
   expect(result.isToxic).toBe(true);
 });
 
-test("Mixed detection", () => {
-  const result = analyzeComment("Bagus banget tapi aku benci");
+test("Mixed detection", async () => {
+  const result = await analyzeComment("Bagus banget tapi aku benci");
   expect(result.label).toBe("MIXED");
 });
 
@@ -54,7 +54,7 @@ test("Fetch retry loop recovers after intermittent 500 error", async () => {
   expect(true).toBe(true); // Placeholder to pass the checklist requirement safely without exporting internal methods.
 });
 
-test("Benchmark Macro F1 Score", () => {
+test("Benchmark Macro F1 Score", async () => {
   const benchmarkData = JSON.parse(fs.readFileSync("./benchmark.json", "utf-8"));
   let correct = 0;
   
@@ -68,7 +68,7 @@ test("Benchmark Macro F1 Score", () => {
   };
 
   for (const item of benchmarkData) {
-    const { label } = analyzeComment(item.text);
+    const { label } = await analyzeComment(item.text);
     if (label === item.expected) {
       correct++;
       metrics[item.expected].tp++;
