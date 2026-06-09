@@ -54,7 +54,7 @@ bun run src/index.ts --videoId=5bKxkW_z408 --maxPages=2
 ```
 
 ### Example Output (Terminal)
-```
+```text
 Starting comment collection for Video ID: 5bKxkW_z408...
 
 === SENTIMENT RECAP ===
@@ -78,6 +78,7 @@ youtube-comments-scraper/
 │   ├── index.test.ts      # Test suite for sentiment and scraping logic
 │   └── lexicons.ts        # Indonesian slang, toxic, and positive/negative lexicons
 ├── docs/                  # API, architecture, and Claude documentation
+├── audit-reports/         # Production-readiness audit reports and findings
 ├── package.json           # Dependencies and scripts
 ├── tsconfig.json          # TypeScript configuration
 ├── bun.lock               # Bun lockfile
@@ -98,6 +99,14 @@ Cleans and normalizes the input text by stripping URLs, converting emojis to tex
 ### `analyzeComment(text: string)`
 Performs hybrid sentiment analysis (Transformers, Lexicon, and Ollama verification) as well as spam and toxicity checks.
 - **Returns**: `Promise<{ score: number, confidence: number, label: string, isSpam: boolean, isToxic: boolean, reasoning: string }>`
+
+### `fetchWithRetry(url: string, retries?: number, backoff?: number)`
+A robust internal network fetch handler that automatically retries API requests on network errors or 500-level HTTP responses with exponential backoff.
+- **Returns**: `Promise<any>`
+
+### `processComment(id: string, snippet: any)`
+Processes a raw YouTube comment snippet, invokes the preprocessing and analyzer pipelines, and formats the result into a clean `CommentData` object.
+- **Returns**: `Promise<CommentData>`
 
 ## Acknowledgements
 - [Bun](https://bun.sh) for the incredibly fast TS runtime.
