@@ -3,6 +3,13 @@ A powerful YouTube comments scraper and hybrid sentiment analyzer specifically t
 
 ![Bun Version](https://img.shields.io/badge/Bun-v1.3.14-black?logo=bun)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+> **Demo / Screenshot**
+> ![Analysis Summary Demo](./demo_summary.jpg)
+
+## Description
+Analyzing YouTube comments manually can be overwhelming, especially for videos with thousands of interactions. This tool automates the extraction and analysis of YouTube comments, providing deep, actionable insights into audience sentiment. It combines a lexicon-based approach, localized HuggingFace transformer models (SST-2 for English, BERT for Indonesian), and local Ollama Qwen2.5 for accuracy verification. Built-in spam and toxicity filters ensure the resulting data is clean and highly relevant.
 
 ## Features
 - **Data Scraping**: Fetches top-level comments and replies using the official YouTube Data API v3.
@@ -66,14 +73,26 @@ Full markdown report saved to: /mnt/c/Users/Tedi Rahmat/Downloads/comments_5bKxk
 ```text
 youtube-comments-scraper/
 ├── index.ts               # Main scraper and analyzer script
+├── index.test.ts          # Test suite for sentiment and scraping logic
 ├── lexicons.ts            # Indonesian slang, toxic, and positive/negative lexicons
 ├── package.json           # Dependencies and scripts
+├── tsconfig.json          # TypeScript configuration
 ├── .env                   # Environment variables (API Key)
 └── local_models/          # Cached transformer models
 ```
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a Pull Request if you'd like to improve the sentiment accuracy, add support for more languages, or optimize the scraping process.
+
+## API Reference / Internal Methods
+While primarily a CLI tool, the core logic is structured to be modular. Key components inside `index.ts` such as sentiment analysis pipelines and markdown report generators can potentially be exported. 
+*[PERLU KONFIRMASI: Tambahkan detail parameter dan return type dari fungsi utama jika ditujukan sebagai library/module]*
+
+## Acknowledgements
+- [Bun](https://bun.sh) for the incredibly fast TS runtime.
+- [Ollama](https://ollama.com/) & [Qwen2.5](https://qwenlm.github.io/) for advanced NLP sentiment verification.
+- [HuggingFace Transformers](https://huggingface.co/docs/transformers/index) via `@xenova/transformers` for local ML inference.
+- YouTube Data API v3 for the data infrastructure.
 
 ## License
 MIT License
