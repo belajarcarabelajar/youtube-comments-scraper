@@ -50,7 +50,7 @@ YOUTUBE_API_KEY=your_api_key_here
 Run the script by providing a YouTube Video ID. You can also specify the maximum number of comment pages to fetch (default is 5).
 
 ```bash
-bun run index.ts --videoId=5bKxkW_z408 --maxPages=2
+bun run src/index.ts --videoId=5bKxkW_z408 --maxPages=2
 ```
 
 ### Example Output (Terminal)
@@ -73,9 +73,11 @@ Full markdown report saved to: /mnt/c/Users/Tedi Rahmat/Downloads/comments_5bKxk
 ## Project Structure
 ```text
 youtube-comments-scraper/
-├── index.ts               # Main scraper and analyzer script
-├── index.test.ts          # Test suite for sentiment and scraping logic
-├── lexicons.ts            # Indonesian slang, toxic, and positive/negative lexicons
+├── src/
+│   ├── index.ts           # Main scraper and analyzer script
+│   ├── index.test.ts      # Test suite for sentiment and scraping logic
+│   └── lexicons.ts        # Indonesian slang, toxic, and positive/negative lexicons
+├── docs/                  # API, architecture, and Claude documentation
 ├── package.json           # Dependencies and scripts
 ├── tsconfig.json          # TypeScript configuration
 ├── bun.lock               # Bun lockfile
@@ -87,7 +89,7 @@ youtube-comments-scraper/
 Contributions are welcome! Please open an issue or submit a Pull Request if you'd like to improve the sentiment accuracy, add support for more languages, or optimize the scraping process.
 
 ## API Reference / Internal Methods
-While primarily a CLI tool, the core logic is structured to be modular. Key components inside `index.ts` such as sentiment analysis pipelines and markdown report generators can potentially be exported. 
+While primarily a CLI tool, the core logic is structured to be modular. Key components inside `src/index.ts` such as sentiment analysis pipelines and markdown report generators can potentially be exported. 
 
 ### `preprocess(text: string)`
 Cleans and normalizes the input text by stripping URLs, converting emojis to text labels, and handling repeating characters.
