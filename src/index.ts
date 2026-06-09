@@ -151,6 +151,8 @@ export async function analyzeComment(text: string): Promise<{
       
       let totalScore = 0;
       let totalConfidence = 0;
+      let hasPositive = false;
+      let hasNegative = false;
       
       for (const chunk of chunks) {
         const result = await currentClassifier(chunk);
@@ -158,8 +160,8 @@ export async function analyzeComment(text: string): Promise<{
         const modelScore = result[0].score;
         
         let chunkScore = 0;
-        if (modelLabel.includes("pos") || modelLabel.includes("4 star") || modelLabel.includes("5 star")) chunkScore = 1;
-        else if (modelLabel.includes("neg") || modelLabel.includes("1 star") || modelLabel.includes("2 star")) chunkScore = -1;
+        if (modelLabel.includes("pos") || modelLabel.includes("4 star") || modelLabel.includes("5 star")) { chunkScore = 1; hasPositive = true; }
+        else if (modelLabel.includes("neg") || modelLabel.includes("1 star") || modelLabel.includes("2 star")) { chunkScore = -1; hasNegative = true; }
         
         totalScore += chunkScore;
         totalConfidence += modelScore;
@@ -179,7 +181,10 @@ export async function analyzeComment(text: string): Promise<{
         }
       }
 
-      if (totalScore > 0) {
+      if (hasPositive && hasNegative) {
+        label = "MIXED";
+        score = 0;
+      } else if (totalScore > 0) {
         label = "POSITIVE";
         score = 1;
       } else if (totalScore < 0) {
