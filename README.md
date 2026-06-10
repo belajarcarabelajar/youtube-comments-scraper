@@ -12,6 +12,9 @@ A powerful YouTube comments scraper and hybrid sentiment analyzer specifically t
 ## Description
 Analyzing YouTube comments manually can be overwhelming, especially for videos with thousands of interactions. This tool automates the extraction and analysis of YouTube comments, providing deep, actionable insights into audience sentiment. It combines a lexicon-based approach, localized HuggingFace transformer models (SST-2 for English, BERT for Indonesian), and local Ollama Qwen2.5 for accuracy verification. Built-in spam and toxicity filters ensure the resulting data is clean and highly relevant.
 
+## Core Mission & Societal Impact
+While this scraper can be used for brand monitoring or market research, its **primary niche and core mission is political**. We built this tool to empower citizens—with Indonesia as a case study—to combat algorithmic echo chambers and filter bubbles on platforms like YouTube. By enabling independent sentiment analysis of political content, this tool grants users control over their information diet, helping them critically evaluate media before being influenced. It is a grassroots movement to prevent societal polarization and algorithmic manipulation.
+
 ## Features
 - **Data Scraping**: Fetches top-level comments and replies using the official YouTube Data API v3.
 - **Hybrid Sentiment Analysis**: Uses HuggingFace Transformers (SST-2 for English, BERT-multilingual for Indonesian), Lexicon-based fallbacks, and Ollama Qwen2.5 for accuracy verification.

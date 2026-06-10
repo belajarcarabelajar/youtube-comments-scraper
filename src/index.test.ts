@@ -120,3 +120,11 @@ test("Benchmark Macro F1 Score", async () => {
   console.log(`\nMacro F1 Score: ${(macroF1 * 100).toFixed(1)}%`);
   expect(macroF1).toBeGreaterThan(0.50); 
 });
+
+import { escapeMarkdown } from "./index";
+
+test("escapeMarkdown sanitizes pipe characters and newlines", () => {
+  const badInput = "Hello | World\nNew Line";
+  const safe = escapeMarkdown(badInput);
+  expect(safe).toBe("Hello \\| World New Line");
+});

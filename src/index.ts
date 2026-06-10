@@ -52,6 +52,10 @@ export interface CommentData {
   processed_at: string;
 }
 
+export function escapeMarkdown(text: string): string {
+  return text.replace(/\|/g, "\\|").replace(/\n/g, " ").replace(/\r/g, "");
+}
+
 export function preprocess(text: string) {
   let norm = text.toLowerCase();
   
@@ -265,9 +269,10 @@ async function fetchReplies(parentId: string, apiKey: string, pageToken?: string
 
 async function verifyWithOllama(text: string, mlLabel: string): Promise<string> {
   const sample = text.length > 200 ? text.substring(0, 200) + "..." : text;
+  const safeSample = sample.replace(/"/g, "'");
   const prompt = `You are an expert sentiment analyzer for Indonesian YouTube comments.
 Determine the actual sentiment of this comment. It may contain sarcasm, slang, or complaints.
-Comment: "${sample}"
+<comment>${safeSample}</comment>
 Reply with EXACTLY ONE WORD: POSITIVE, NEGATIVE, or NEUTRAL. No explanations or punctuation.`;
 
   try {
@@ -426,10 +431,10 @@ async function run() {
         `## 📄 Full Export Dump`,
         `| ID | Author | Label | Score | Conf | Raw Text | Normalized | Reasoning |`,
         `|---|---|---|---|---|---|---|---|`,
-        ...allComments.map(c => `| ${c.comment_id} | ${c.author} | ${c.sentiment_label} | ${c.sentiment_score} | ${c.confidence_score}% | ${c.raw_text} | ${c.normalized_text} | ${c.reasoning_summary} |`),
+        ...allComments.map(c => `| ${c.comment_id} | ${escapeMarkdown(c.author)} | ${c.sentiment_label} | ${c.sentiment_score} | ${c.confidence_score}% | ${escapeMarkdown(c.raw_text)} | ${escapeMarkdown(c.normalized_text)} | ${escapeMarkdown(c.reasoning_summary)} |`),
       ];
 
-      const outputPath = `/mnt/c/Users/Tedi Rahmat/Downloads/comments_${VIDEO_ID}.md`;
+      const outputPath = `./comments_${VIDEO_ID}.md`;
       writeFileSync(outputPath, markdownLines.join("\n"), "utf-8");
       
       console.log(`\n=== SENTIMENT RECAP ===`);
