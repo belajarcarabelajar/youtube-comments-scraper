@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "module": "src/index.ts",
   "type": "module",
-  "private": true,
+  "license": "MIT",
   "devDependencies": {
     "@types/bun": "latest",
     "@types/sentiment": "^5.0.4"

@@ -4,7 +4,7 @@ A powerful YouTube comments scraper and hybrid sentiment analyzer specifically t
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![Bun Version](https://img.shields.io/badge/Bun-v1.3.14-black?logo=bun)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)
-![License](https://img.shields.io/badge/License-MIT-green)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > **Demo / Screenshot**
 > ![Analysis Summary Demo](./demo_summary.jpg)
@@ -43,11 +43,11 @@ While this scraper can be used for brand monitoring or market research, its **pr
    ```
 
 ## Configuration
-Create a `.env` file in the root directory and add your YouTube API Key:
+Create a `.env` file in the root directory and add your YouTube API Key. You can use the `.env.example` file as a template:
 ```env
-YOUTUBE_API_KEY=your_api_key_here
+YOUTUBE_API_KEY=YOUR_YOUTUBE_API_KEY_HERE
 ```
-> **Warning**: Do not commit the `.env` file. It is already added to `.gitignore`.
+> **Warning**: Do not commit the `.env` file or any real API keys. It is already added to `.gitignore`. Users should create and configure their own YouTube API key via the Google Cloud Console.
 
 ## Usage
 Run the script by providing a YouTube Video ID. You can also specify the maximum number of comment pages to fetch (default is 5).
@@ -111,6 +111,11 @@ A robust internal network fetch handler that automatically retries API requests 
 Processes a raw YouTube comment snippet, invokes the preprocessing and analyzer pipelines, and formats the result into a clean `CommentData` object.
 - **Returns**: `Promise<CommentData>`
 
+## Limitations & Compliance
+- **YouTube Terms of Service**: Users must comply with the [YouTube API Terms of Service](https://developers.google.com/youtube/terms/api-services-terms-of-service) when using this tool.
+- **Quota Limits**: The YouTube Data API v3 has strict quota limits (default 10,000 units per day). Fetching comments consumes quota (e.g., 1 unit per page of comments). Be mindful of your usage to avoid exhaustion.
+- **Privacy Risks**: Storing and redistributing scraped YouTube user comments presents privacy and copyright risks. Do not distribute or publish raw user data sets without verifying compliance obligations and redistribution rights under the YouTube ToS.
+
 ## Acknowledgements
 - [Bun](https://bun.sh) for the incredibly fast TS runtime.
 - [Ollama](https://ollama.com/) & [Qwen2.5](https://qwenlm.github.io/) for advanced NLP sentiment verification.
@@ -118,4 +123,4 @@ Processes a raw YouTube comment snippet, invokes the preprocessing and analyzer 
 - YouTube Data API v3 for the data infrastructure.
 
 ## License
-MIT License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
