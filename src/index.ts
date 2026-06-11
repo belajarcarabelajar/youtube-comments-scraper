@@ -79,7 +79,8 @@ export function preprocess(text: string) {
   // Normalize repeating characters (e.g., baguuuus -> baguus)
   norm = norm.replace(/(.)\1{2,}/g, "$1$1");
 
-  norm = norm.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," . ");
+  norm = norm.replace(/[\/#!$%\^&\*;:{}=\-_`~()]/g," ");
+  norm = norm.replace(/[.,?]/g," . ");
   norm = norm.replace(/\s{2,}/g, " ").trim();
   
   const words = norm.split(" ");
@@ -174,14 +175,27 @@ export async function analyzeComment(text: string): Promise<{
       const avgScore = totalScore / chunks.length;
       confidence = Math.round((totalConfidence / chunks.length) * 100);
       
-      if (confidence < 60) {
-        const lexResult = sentiment.analyze(normalized, { extras: idLexicon });
-        if (lexResult.score > 1 && avgScore <= 0) {
+      const lexResult = sentiment.analyze(normalized, { extras: idLexicon });
+      
+      if (confidence < 75 || Math.abs(lexResult.score) >= 2) {
+        if (lexResult.score >= 2) {
+          totalScore = Math.max(1, totalScore + 1);
+          hasPositive = true;
+          if (chunks.length <= 2) hasNegative = false;
+          usedModel += " + LexOverride(Pos)";
+        } else if (lexResult.score <= -2) {
+          totalScore = Math.min(-1, totalScore - 1);
+          hasNegative = true;
+          if (chunks.length <= 2) hasPositive = false;
+          usedModel += " + LexOverride(Neg)";
+        } else if (lexResult.score === 1 && avgScore <= 0) {
           totalScore += 1;
-          usedModel += " + Lexicon(Pos)";
-        } else if (lexResult.score < -1 && avgScore >= 0) {
+          hasPositive = true;
+          usedModel += " + Lex(Pos)";
+        } else if (lexResult.score === -1 && avgScore >= 0) {
           totalScore -= 1;
-          usedModel += " + Lexicon(Neg)";
+          hasNegative = true;
+          usedModel += " + Lex(Neg)";
         }
       }
 
