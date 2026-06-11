@@ -12,8 +12,24 @@ A powerful YouTube comments scraper and hybrid sentiment analyzer specifically t
 ## Description
 Analyzing YouTube comments manually can be overwhelming, especially for videos with thousands of interactions. This tool automates the extraction and analysis of YouTube comments, providing deep, actionable insights into audience sentiment. It combines a lexicon-based approach, localized HuggingFace transformer models (SST-2 for English, BERT for Indonesian), and local Ollama Qwen2.5 for accuracy verification. Built-in spam and toxicity filters ensure the resulting data is clean and highly relevant.
 
-## Core Mission & Societal Impact
-While this scraper can be used for brand monitoring or market research, its **primary niche and core mission is political**. We built this tool to empower citizens—with Indonesia as a case study—to combat algorithmic echo chambers and filter bubbles on platforms like YouTube. By enabling independent sentiment analysis of political content, this tool grants users control over their information diet, helping them critically evaluate media before being influenced. It is a grassroots movement to prevent societal polarization and algorithmic manipulation.
+## 🌍 Philosophy, Mission, & Societal Impact
+
+*“Technology without philosophy is just a tool; but technology driven by a profound mission is a catalyst for societal change.”*
+
+While sentiment analysis is heavily utilized in the corporate world for brand monitoring and market research, **this repository is built upon a radically different philosophy: democratizing data for political transparency and social accountability.** 
+
+In the modern digital era—where algorithms curate echo chambers and public opinion is easily manipulated—open-source analytical tools must step up to serve the broader society. Our mission focuses on the following pillars:
+
+1. **Defending Digital Democracy & Transparency**
+   Political discourse on platforms like YouTube is often obscured by algorithmic bias, making it difficult to gauge true public sentiment. This tool empowers citizens, independent journalists, and researchers to bypass "filter bubbles" and transparently audit how political campaigns, policies, or figures are actually being received by the public.
+   
+2. **Combatting Astroturfing & Organized Manipulation (Buzzers)**
+   Political propaganda frequently relies on engineered toxicity and inorganic spam (e.g., coordinated *buzzer* attacks or bot farms) to drown out genuine debate. By integrating rigorous spam and toxicity detection, this tool aims to separate organic citizen feedback from paid manipulation, providing a clearer picture of authentic public discourse.
+
+3. **Mitigating Societal Polarization**
+   Echo chambers thrive on extreme sentiments. By openly mapping and quantifying the spectrum of opinions (Positive, Negative, Mixed, Neutral), we aim to provide objective data that cools down hyper-polarized debates. When society can see the *data-driven reality* of a discussion, it prevents the loudest, most toxic voices from dictating the political narrative.
+
+Ultimately, this project is not just a technological achievement in machine learning; it is a **grassroots, open-source movement**. We aim to equip society with the same powerful analytical capabilities once reserved for massive tech conglomerates and political elites, ensuring that the digital public square remains accountable, transparent, and democratic.
 
 ## Features
 - **Data Scraping**: Fetches top-level comments and replies using the official YouTube Data API v3.
