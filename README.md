@@ -65,6 +65,14 @@ YOUTUBE_API_KEY=YOUR_YOUTUBE_API_KEY_HERE
 ```
 > **Warning**: Do not commit the `.env` file or any real API keys. It is already added to `.gitignore`. Users should create and configure their own YouTube API key via the Google Cloud Console.
 
+## AI Agents / Skills Setup
+If you are using AI coding assistants (like Cursor, Cline, Claude Code, or Antigravity), this repository contains a unified Single Source of Truth (SSOT) for agent skills. To automatically set up the rules and symlinks for your AI providers, run:
+
+```bash
+bun run setup:skills
+```
+This will automatically configure `.cursorrules`, `.clinerules`, and the necessary `.agents` and `.claude` directories.
+
 ## Usage
 Run the script by providing a YouTube Video ID. You can also specify the maximum number of comment pages to fetch (default is 5).
 
