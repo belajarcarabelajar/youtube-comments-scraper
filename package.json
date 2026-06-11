@@ -4,6 +4,9 @@
   "module": "src/index.ts",
   "type": "module",
   "license": "MIT",
+  "scripts": {
+    "setup:skills": "bun run scripts/setup-skills.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/sentiment": "^5.0.4"
